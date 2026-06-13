@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8" />
-  <title>Locations Tool</title>
-
-  <style>
+<style>
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -13,6 +7,11 @@
     select, button {
       padding: 8px;
       margin: 5px 0;
+    }
+
+    #filters select {
+      display: block;
+      width: 300px;
     }
 
     table {
@@ -36,13 +35,70 @@
 
 <body>
 
-<h1>Locations</h1>
+<h1>Sonder- und Privatschulen</h1>
 
 <select id="wohnortSelect">
   <option value="">Wohnort wählen</option>
 </select>
 
 <button onclick="applyFilter()">Sortieren nach Distanz</button>
+
+<div id="filters">
+
+<select id="typusFilter">
+  <option value="">Typus (alle)</option>
+  <option value="A">A</option>
+  <option value="B">B</option>
+  <option value="C">C</option>
+  <option value="Privat">Privat</option>
+  <option value="Timeout">Timeout</option>
+</select>
+
+<select id="sonderFilter">
+  <option value="">Erfahrung Sonderschulung (alle)</option>
+  <option value="Ja">Ja</option>
+  <option value="Nein">Nein</option>
+</select>
+
+<select id="spezialFilter">
+  <option value="">Spezialgebiet (alle)</option>
+  <option value="ASS">ASS</option>
+  <option value="Blindheit">Blindheit</option>
+  <option value="Hochbegabung">Hochbegabung</option>
+  <option value="Hörbeeinträchtigung">Hörbeeinträchtigung</option>
+  <option value="Sprache">Sprache</option>
+  <option value="Taubblindheit">Taubblindheit</option>
+</select>
+
+<select id="stufenFilter">
+  <option value="">Stufen (alle)</option>
+  <option value="Kindergarten">Kindergarten</option>
+  <option value="Unterstufe">Unterstufe</option>
+  <option value="Mittelstufe">Mittelstufe</option>
+  <option value="Oberstufe">Oberstufe</option>
+  <option value="15plus">15plus</option>
+</select>
+
+<select id="privatFilter">
+  <option value="">Privatschule (alle)</option>
+  <option value="Ja">Ja</option>
+  <option value="Nein">Nein</option>
+</select>
+
+<select id="therapienFilter">
+  <option value="">Ausgebildete Fachkräfte (alle)</option>
+  <option value="Ja">Ja</option>
+  <option value="Nein">Nein</option>
+</select>
+
+<select id="heimFilter">
+  <option value="ALL">Alle</option>
+  <option value="JA_A">Ja (Jungs)</option>
+  <option value="JA_B">Ja (Mädchen)</option>
+  <option value="NEIN">Nein</option>
+</select>
+
+</div>
 
 <div id="list">Lade Daten...</div>
 
@@ -54,34 +110,70 @@
     const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFxZmZ1eWJweW5zc3JpemRhZnh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNDUwMzAsImV4cCI6MjA5NjkyMTAzMH0.Flf3jClPFn4eBqQzz0Cu4qucbw7krJB8-mFm5lhTK-Y";
   const client = supabase.createClient(supabaseUrl, supabaseKey);
 
+
 let locations = [];
 let wohnorte = [];
 
-/*
-  🏷️ SPALTEN UMBENENNUNG (DEINE VERSION)
-*/
+const heimMap = {
+  JA_A: ["Ja", "Ja, aber nur für Jungs"],
+  JA_B: ["Ja"],
+  NEIN: ["Nein"]
+};
+
 const columnLabels = {
   name: "Name",
   ort: "Ort",
   distance: "Entfernung (km)",
-
   typus: "Typus",
   sonderschueler: "Erfahrung mit Sonderschulung",
   speziell: "Spezialgebiet",
   stufen: "Stufen",
   privat: "Privat",
-  therapien_vor_ort: "Therapien von Ort",
+  therapien_vor_ort: "Ausgebildete Fachkräfte",
   heimangebot: "Heimangebot"
 };
 
+/* =========================
+   SORTIERLOGIK (NEU CLEAN)
+========================= */
+function sortData(data, useDistance = false) {
+  return data.sort((a, b) => {
+    // 1. PRIVAT immer zuerst (Nein)
+    const aPriv = a.privat === "Nein" ? 0 : 1;
+    const bPriv = b.privat === "Nein" ? 0 : 1;
+
+    if (aPriv !== bPriv) {
+      return aPriv - bPriv;
+    }
+
+    // 2. Sekundärsortierung abhängig vom Modus
+    if (useDistance) {
+      return (a.distance ?? 999999) - (b.distance ?? 999999);
+    }
+
+    return (a.name || "").localeCompare(b.name || "", "de");
+  });
+}
+
+/* =========================
+   LOAD
+========================= */
 async function load() {
   locations = (await client.from('locations').select('*')).data || [];
   wohnorte = (await client.from('wohnorte').select('*')).data || [];
 
   renderDropdown();
-  renderTable(locations);
+
+  document.querySelectorAll("#filters select").forEach(el => {
+    el.addEventListener("change", applyFilter);
+  });
+
+  renderTable(sortData([...locations], false));
 }
 
+/* =========================
+   DROPDOWN
+========================= */
 function renderDropdown() {
   const select = document.getElementById("wohnortSelect");
 
@@ -95,6 +187,9 @@ function renderDropdown() {
     });
 }
 
+/* =========================
+   DISTANCE
+========================= */
 function distance(lat1, lon1, lat2, lon2) {
   const R = 6371;
 
@@ -115,33 +210,62 @@ function distance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
+/* =========================
+   FILTER
+========================= */
+function getFilteredData(baseData) {
+  const typus = document.getElementById("typusFilter").value;
+  const sonder = document.getElementById("sonderFilter").value;
+  const spezial = document.getElementById("spezialFilter").value;
+  const stufen = document.getElementById("stufenFilter").value;
+  const privat = document.getElementById("privatFilter").value;
+  const therapien = document.getElementById("therapienFilter").value;
+  const heim = document.getElementById("heimFilter").value;
+
+  return baseData.filter(row => {
+    return (
+      (!typus || row.typus == typus) &&
+      (!sonder || row.sonderschueler == sonder) &&
+      (!spezial || row.speziell?.split(";").map(x => x.trim()).includes(spezial)) &&
+      (!stufen || row.stufen == stufen) &&
+      (!privat || row.privat == privat) &&
+      (!therapien || row.therapien_vor_ort == therapien) &&
+      (!heim || heim === "ALL" || heimMap[heim]?.includes(row.heimangebot))
+    );
+  });
+}
+
+/* =========================
+   APPLY FILTER + DISTANCE
+========================= */
 function applyFilter() {
   const id = document.getElementById("wohnortSelect").value;
   const w = wohnorte.find(x => String(x.id) === String(id));
 
-  if (!w) {
-    renderTable(locations);
-    return;
+  let filtered = getFilteredData(locations);
+
+  const useDistance = !!w;
+
+  if (w) {
+    filtered = filtered.map(l => ({
+      ...l,
+      distance: distance(
+        Number(w.lat),
+        Number(w.lng),
+        Number(l.lat),
+        Number(l.lng)
+      )
+    }));
   }
 
-  const enriched = locations.map(l => ({
-    ...l,
-    distance: distance(
-      Number(w.lat),
-      Number(w.lng),
-      Number(l.lat),
-      Number(l.lng)
-    )
-  }));
+  filtered = sortData(filtered, useDistance);
 
-  enriched.sort((a, b) => a.distance - b.distance);
-
-  renderTable(enriched);
+  renderTable(filtered);
 }
 
-/*
-  🧠 DYNAMISCHE TABELLE MIT UMBENENNUNG
-*/
+/* =========================
+   TABLE
+========================= */
 function renderTable(data) {
   if (!data.length) {
     document.getElementById("list").innerHTML = "Keine Daten";
