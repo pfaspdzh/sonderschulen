@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Locations Tool</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    select, button {
+      padding: 8px;
+      margin: 5px 0;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 6px;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    th {
+      background: #f4f4f4;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Locations</h1>
+
+<select id="wohnortSelect">
+  <option value="">Wohnort wählen</option>
+</select>
+
+<button onclick="applyFilter()">Sortieren nach Distanz</button>
+
+<div id="list">Lade Daten...</div>
+
+<script src="https://unpkg.com/@supabase/supabase-js"></script>
+
+<script>
+    // 🔑 Supabase
+    const supabaseUrl = "https://aqffuybpynssrizdafxx.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFxZmZ1eWJweW5zc3JpemRhZnh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNDUwMzAsImV4cCI6MjA5NjkyMTAzMH0.Flf3jClPFn4eBqQzz0Cu4qucbw7krJB8-mFm5lhTK-Y";
+  const client = supabase.createClient(supabaseUrl, supabaseKey);
+
+let locations = [];
+let wohnorte = [];
+
+/*
+  🏷️ SPALTEN UMBENENNUNG (DEINE VERSION)
+*/
+const columnLabels = {
+  name: "Name",
+  ort: "Ort",
+  distance: "Entfernung (km)",
+
+  typus: "Typus",
+  sonderschueler: "Erfahrung mit Sonderschulung",
+  speziell: "Spezialgebiet",
+  stufen: "Stufen",
+  privat: "Privat",
+  therapien_vor_ort: "Therapien von Ort",
+  heimangebot: "Heimangebot"
+};
+
+async function load() {
+  locations = (await client.from('locations').select('*')).data || [];
+  wohnorte = (await client.from('wohnorte').select('*')).data || [];
+
+  renderDropdown();
+  renderTable(locations);
+}
+
+function renderDropdown() {
+  const select = document.getElementById("wohnortSelect");
+
+  wohnorte
+    .sort((a, b) => (a.name || "").localeCompare(b.name || "", "de"))
+    .forEach(w => {
+      const opt = document.createElement("option");
+      opt.value = String(w.id);
+      opt.textContent = w.name;
+      select.appendChild(opt);
+    });
+}
+
+function distance(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+
+  const φ1 = lat1 * Math.PI / 180;
+  const φ2 = lat2 * Math.PI / 180;
+
+  const Δφ = (lat2 - lat1) * Math.PI / 180;
+  const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+  const a =
+    Math.sin(Δφ / 2) ** 2 +
+    Math.cos(φ1) *
+    Math.cos(φ2) *
+    Math.sin(Δλ / 2) ** 2;
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return R * c;
+}
+
+function applyFilter() {
+  const id = document.getElementById("wohnortSelect").value;
+  const w = wohnorte.find(x => String(x.id) === String(id));
+
+  if (!w) {
+    renderTable(locations);
+    return;
+  }
+
+  const enriched = locations.map(l => ({
+    ...l,
+    distance: distance(
+      Number(w.lat),
+      Number(w.lng),
+      Number(l.lat),
+      Number(l.lng)
+    )
+  }));
+
+  enriched.sort((a, b) => a.distance - b.distance);
+
+  renderTable(enriched);
+}
+
+/*
+  🧠 DYNAMISCHE TABELLE MIT UMBENENNUNG
+*/
+function renderTable(data) {
+  if (!data.length) {
+    document.getElementById("list").innerHTML = "Keine Daten";
+    return;
+  }
+
+  const columns = Object.keys(data[0])
+    .filter(col => !["id", "lat", "lng"].includes(col));
+
+  let html = "<table><tr>";
+
+  columns.forEach(col => {
+    const label = columnLabels[col] || col;
+    html += `<th>${label}</th>`;
+  });
+
+  html += "</tr>";
+
+  data.forEach(row => {
+    html += "<tr>";
+
+    columns.forEach(col => {
+      const val = row[col];
+
+      html += `<td>${
+        typeof val === "number"
+          ? (col === "distance" ? val.toFixed(2) : val)
+          : (val ?? "-")
+      }</td>`;
+    });
+
+    html += "</tr>";
+  });
+
+  html += "</table>";
+
+  document.getElementById("list").innerHTML = html;
+}
+
+load();
+</script>
+
+</body>
+</html>
