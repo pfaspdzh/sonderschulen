@@ -217,12 +217,12 @@ textarea {
 
   padding: 8px;
   font-size: 13px;
-  color: #e5e7eb;
+  color: #111111;
 }
 
 textarea:focus {
-  outline: none;
-  border-color: #3b82f6;
+  outline: #111111;
+  border-color: #111111;
   box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
 }
 
@@ -549,7 +549,18 @@ function promptUserDropdown() {
     overlay.style = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;";
 
     const box = document.createElement("div");
-    box.style = "background:white;padding:20px;border-radius:8px;";
+    box.style = `
+  background: #dbd1bf;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #3b82f6;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
 
     const select = document.createElement("select");
     select.innerHTML =
@@ -586,7 +597,7 @@ async function submitComment(locationId) {
   };
 
   comments.push(newComment);
-  renderTable(locations);
+applyFilter();
 
   await client.from("location_comments").insert([newComment]);
 
