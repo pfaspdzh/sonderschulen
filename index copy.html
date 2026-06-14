@@ -309,13 +309,11 @@ textarea:focus {
 <select id="sonderFilter">
   <option value="">Erfahrung Sonderschulung (alle)</option>
   <option value="Ja">Ja</option>
-  <option value="Nein">Nein</option>
 </select>
 
 <select id="therapienFilter">
   <option value="">Ausgebildete Fachkräfte (alle)</option>
   <option value="Ja">Ja</option>
-  <option value="Nein">Nein</option>
 </select>
 
 <select id="heimFilter">
@@ -391,19 +389,36 @@ const columnOrder = [
 ========================= */
 function sortData(data, useDistance = false) {
   return data.sort((a, b) => {
+    // 1. Privat: Nein zuerst
     const aPriv = a.privat === "Nein" ? 0 : 1;
     const bPriv = b.privat === "Nein" ? 0 : 1;
 
     if (aPriv !== bPriv) return aPriv - bPriv;
 
+    // 2. Distanz (optional)
     if (useDistance) {
-      return (a.distance ?? 999999) - (b.distance ?? 999999);
+      const distanceDiff =
+        (a.distance ?? 999999) - (b.distance ?? 999999);
+
+      if (distanceDiff !== 0) return distanceDiff;
     }
 
+    // 3. Sonderschüler: Ja -> Ausnahmefälle -> Nein
+    const sonderOrder = {
+      "Ja": 0,
+      "Ausnahmefälle": 1,
+      "Nein": 2
+    };
+
+    const aSonder = sonderOrder[a.sonderschueler] ?? 99;
+    const bSonder = sonderOrder[b.sonderschueler] ?? 99;
+
+    if (aSonder !== bSonder) return aSonder - bSonder;
+
+    // 4. Alphabetisch
     return (a.name || "").localeCompare(b.name || "", "de");
   });
 }
-
 /* =========================
    Reset Filters
 ========================= */
@@ -487,7 +502,7 @@ function getFilteredData(baseData) {
 
   return baseData.filter(row => {
     return (
-      (!typus || row.typus == typus) &&
+      (!typus || row.typus?.split(";").map(x => x.trim()).includes(typus)) &&
       (!sonder || row.sonderschueler == sonder) &&
       (!spezial || row.speziell?.split(";").map(x => x.trim()).includes(spezial)) &&
       (!stufen || row.stufen?.split(";").map(x => x.trim()).includes(stufen)) &&
