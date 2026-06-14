@@ -1,670 +1,686 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-<meta charset="UTF-8" />
-
-<style>
-body {
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  margin: 0;
-  background: #000000
-  color: #e5e7eb;
-}
-
-/* HERO */
-.hero-header {
-  max-width: 1200px;
-  margin: 24px auto 18px;
-  padding: 28px 20px;
-  text-align: center;
-
-  background: linear-gradient(135deg, #fff3de, #243a4f);
-  border-radius: 18px;
-
-  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-
-
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-header h1 {
- position: relative;
-  z-index: 1; /* vor dem Overlay */
-  margin: 0;
-  font-size: 30px;
-  font-weight: 700;
-  color: #FFFFFF;
-  letter-spacing: -0.02em;
-}
-
-.hero-header::before {
-  content: "";
-  position: absolute;
-  top: -60%;
-  left: -40%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(59,130,246,0.12));
-  transform: rotate(25deg);
-  z-index: 0; /* hinter den Text */
-}
-
-
-
-/* TOP CONTROLS */
-#topControls {
-max-width: 380px;
-  margin: 0 auto 18px;
-  padding: 14px;
-
-  background: #dbd1bf;
-  border-radius: 14px;
-  backdrop-filter: blur(10px);
-}
-
-#topControls select {
-background: #0000000
-}
-#topControls button {
-  width: 380px;
-  background: #243a4f;
-}
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin: 16px 0;
-}
-
-#topControls button {
-  width: 380px;
-}
-
-/* FILTER CARD */
-#filters {
-  max-width: 380px;
-  margin: 0 auto 18px;
-  padding: 14px;
-
-  background: #dbd1bf;
-  border-radius: 14px;
-  backdrop-filter: blur(10px);
-}
-
-/* SELECT */
-select {
-  width: 100%;
-  margin-bottom: 10px;
-
-  padding: 10px 12px;
-  border-radius: 10px;
-
-  border: 1px solid rgba(255,255,255,0.10);
-  background: #000000
-  color: #111111;
-
-  font-size: 14px;
-  transition: all 0.15s ease;
-}
-
-select:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
-}
-
-/* BUTTON */
-button {
-  padding: 10px 12px;
-  border-radius: 10px;
-
-  border: 1px solid rgba(255,255,255,0.10);
-  background: #243a4f;
-  color: #e5e7eb;
-
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-button:hover {
-  background: rgba(59,130,246,0.15);
-  border-color: rgba(59,130,246,0.4);
-}
-
-.reset-btn {
-  width: 100%;
-  margin-top: 10px;  
-  background: #243a4f;
-}
-
-/* TABLE WRAPPER */
-#list {
-  padding: 16px;
-  overflow-x: auto;
-}
-
-/* TABLE */
-table {
-
-  width: 100%;
-  min-width: 1200px;
-  border-collapse: separate;
-  border-spacing: 0;
-
-
- background: #243a4f;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px;
-  backdrop-filter: blur(10px);
-
-  border: 1px solid rgba(255,255,255,0.06);
-}
-
-/* HEADER */
-th {
-  background: rgba(255,255,255,0.04);
-  color: #FFFFFF;
-  font-size: 12px;
-  font-weight: 600;
-  text-align: left;
-  padding: 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-/* ROWS */
-td {
-  padding: 10px 12px;
-  font-size: 13px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  vertical-align: top;
-  color: #111111;
-  background: #e8e6e6;
-}
-
-tr:nth-child(even) td {
-  background: #d9d7d4;
-}
-
-td:last-child {
-  padding-right: 40px;
-}
-
-tr:hover td {
-  background: #c0cad1;
-}
-
-/* COMMENTS */
-.comment-box {
-  background: #000000
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 6px 8px;
-  border-radius: 8px;
-  margin-bottom: 5px;
-  margin-right: 5px;
-  font-size: 12px;
-}
-
-/* TEXTAREA */
-textarea {
-  max-width: 100%;
-  border-radius: 10px;
-
-  border: 1px solid rgba(255,255,255,0.10);
-  background: #000000
-
-  padding: 8px;
-  font-size: 13px;
-  color: #e5e7eb;
-}
-
-textarea:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
-}
-
-/* IMPRESSUM */
-#impressum {
-  margin-top: 40px;
-  padding: 30px 16px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.02);
-  text-align: center;
-}
-
-.impressum-inner {
-  max-width: 700px;
-  margin: 0 auto;
-  font-size: 13px;
-  color: #111111;
-}
-
-.impressum-inner h3 {
-  font-size: 14px;
-  margin-bottom: 10px;
-  color: #111111;
-}
-
-.impressum-note {
-  margin-top: 10px;
-  font-size: 12px;
-  color: #111111;
-}
-</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
 </head>
-
 <body>
-
-<div class="hero-header">
-  <h1>Verzeichnis sämtlicher Sonder- und Privatschulen im Kanton Zürich</h1>
-</div>
-
-<div id="topControls">
-  <select id="wohnortSelect">
-    <option value="">Wohnort wählen</option>
-  </select>
-
-  <button onclick="applyFilter()">Sortieren nach Distanz</button>
-</div>
-
-<div id="filters">
-
-<select id="privatFilter">
-  <option value="">Privatschule (alle)</option>
-  <option value="Ja">Ja</option>
-  <option value="Nein">Nein</option>
-</select>
-
-<select id="typusFilter">
-  <option value="">Typus (alle)</option>
-  <option value="A">A</option>
-  <option value="B">B</option>
-  <option value="C">C</option>
-  <option value="Privat">Privat</option>
-  <option value="Timeout">Timeout</option>
-</select>
-
-<select id="stufenFilter">
-  <option value="">Stufen (alle)</option>
-  <option value="Kindergarten">Kindergarten</option>
-  <option value="Unterstufe">Unterstufe</option>
-  <option value="Mittelstufe">Mittelstufe</option>
-  <option value="Sekundarstufe">Sekundarstufe</option>
-  <option value="15plus">15plus</option>
-</select>
-
-<select id="spezialFilter">
-  <option value="">Spezialgebiet (alle)</option>
-  <option value="ASS">ASS</option>
-  <option value="Blindheit">Blindheit</option>
-  <option value="Hochbegabung">Hochbegabung</option>
-  <option value="Hörbeeinträchtigung">Hörbeeinträchtigung</option>
-  <option value="Sprache">Sprache</option>
-  <option value="Taubblindheit">Taubblindheit</option>
-</select>
-
-<select id="sonderFilter">
-  <option value="">Erfahrung Sonderschulung (alle)</option>
-  <option value="Ja">Ja</option>
-  <option value="Nein">Nein</option>
-</select>
-
-<select id="therapienFilter">
-  <option value="">Ausgebildete Fachkräfte (alle)</option>
-  <option value="Ja">Ja</option>
-  <option value="Nein">Nein</option>
-</select>
-
-<select id="heimFilter">
-  <option value="">Heimangebot (alle)</option>
-  <option value="JA_A">Ja (Jungs)</option>
-  <option value="JA_B">Ja (Mädchen)</option>
-  <option value="NEIN">Nein</option>
-</select>
-
-<button class="reset-btn" onclick="resetFilters()">Alle Filter zurücksetzen</button>
-
-</div>
-
-<div id="list">Lade Daten...</div>
-
-<script src="https://unpkg.com/@supabase/supabase-js"></script>
-
-<script>
-    // 🔑 Supabase
-    const supabaseUrl = "https://aqffuybpynssrizdafxx.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFxZmZ1eWJweW5zc3JpemRhZnh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNDUwMzAsImV4cCI6MjA5NjkyMTAzMH0.Flf3jClPFn4eBqQzz0Cu4qucbw7krJB8-mFm5lhTK-Y";
-  const client = supabase.createClient(supabaseUrl, supabaseKey);
-
-/* =========================
-   STATE
-========================= */
-let locations = [];
-let wohnorte = [];
-let users = [];
-let comments = [];
-
-/* =========================
-   MAPPING
-========================= */
-const heimMap = {
-  JA_A: ["Ja", "Ja, aber nur für Jungs"],
-  JA_B: ["Ja"],
-  NEIN: ["Nein"]
-};
-
-const columnLabels = {
-  name: "Name",
-  ort: "Ort",
-  privat: "Privat",
-  typus: "Typus",
-  stufen: "Stufen",
-  speziell: "Spezialgebiet",
-  sonderschueler: "Sonderschulung",
-  therapien_vor_ort: "Therapien",
-  heimangebot: "Heimangebot",
-  distance: "Distanz (km)"
-};
-
-/* =========================
-   FIXE SPALTENREIHENFOLGE
-========================= */
-const columnOrder = [
-  "name",
-  "ort",
-  "privat",
-  "typus",
-  "stufen",
-  "speziell",
-  "sonderschueler",
-  "therapien_vor_ort",
-  "heimangebot",
-  "distance",
-  "comments"
-];
-
-/* =========================
-   SORT
-========================= */
-function sortData(data, useDistance = false) {
-  return data.sort((a, b) => {
-    const aPriv = a.privat === "Nein" ? 0 : 1;
-    const bPriv = b.privat === "Nein" ? 0 : 1;
-
-    if (aPriv !== bPriv) return aPriv - bPriv;
-
-    if (useDistance) {
-      return (a.distance ?? 999999) - (b.distance ?? 999999);
-    }
-
-    return (a.name || "").localeCompare(b.name || "", "de");
-  });
-}
-
-/* =========================
-   Reset Filters
-========================= */
-
-function resetFilters() {
-  // alle Filter-Selects zurücksetzen
-  document.querySelectorAll("#filters select").forEach(el => {
-    el.value = "";
-  });
-
-  // Wohnort auch explizit resetten
-  const wohnortSelect = document.getElementById("wohnortSelect");
-  if (wohnortSelect) wohnortSelect.value = "";
-
-  // Originaldaten neu anzeigen
-  renderTable(sortData([...locations], false));
-}
-
-/* =========================
-   LOAD
-========================= */
-async function load() {
-  locations = (await client.from('locations').select('*')).data || [];
-  wohnorte = (await client.from('wohnorte').select('*')).data || [];
-  users = (await client.from('users').select('*')).data || [];
-  comments = (await client.from('location_comments').select('*')).data || [];
-
-  renderDropdown();
-
-  document.querySelectorAll("#filters select")
-    .forEach(el => el.addEventListener("change", applyFilter));
-
-  renderTable(sortData([...locations], false));
-}
-
-/* =========================
-   DROPDOWN
-========================= */
-function renderDropdown() {
-  const select = document.getElementById("wohnortSelect");
-
-  wohnorte
-    .sort((a,b) => (a.name||"").localeCompare(b.name||"","de"))
-    .forEach(w => {
-      const opt = document.createElement("option");
-      opt.value = w.id;
-      opt.textContent = w.name;
-      select.appendChild(opt);
-    });
-}
-
-/* =========================
-   DISTANCE
-========================= */
-function distance(lat1, lon1, lat2, lon2) {
-  const R = 6371;
-
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-
-  const a =
-    Math.sin(dLat/2)**2 +
-    Math.cos(lat1*Math.PI/180) *
-    Math.cos(lat2*Math.PI/180) *
-    Math.sin(dLon/2)**2;
-
-  return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-}
-
-/* =========================
-   FILTER
-========================= */
-function getFilteredData(baseData) {
-  const typus = document.getElementById("typusFilter").value;
-  const sonder = document.getElementById("sonderFilter").value;
-  const spezial = document.getElementById("spezialFilter").value;
-  const stufen = document.getElementById("stufenFilter").value;
-  const privat = document.getElementById("privatFilter").value;
-  const therapien = document.getElementById("therapienFilter").value;
-  const heim = document.getElementById("heimFilter").value;
-
-  return baseData.filter(row => {
-    return (
-      (!typus || row.typus == typus) &&
-      (!sonder || row.sonderschueler == sonder) &&
-      (!spezial || row.speziell?.split(";").map(x => x.trim()).includes(spezial)) &&
-      (!stufen || row.stufen?.split(";").map(x => x.trim()).includes(stufen)) &&
-      (!privat || row.privat == privat) &&
-      (!therapien || row.therapien_vor_ort == therapien) &&
-      (!heim || heim === "ALL" || heimMap[heim]?.includes(row.heimangebot))
-    );
-  });
-}
-
-/* =========================
-   APPLY FILTER
-========================= */
-function applyFilter() {
-  const id = wohnortSelect.value;
-  const w = wohnorte.find(x => String(x.id) === String(id));
-
-  let filtered = getFilteredData(locations);
-
-  const useDistance = !!w;
-
-  if (w) {
-    filtered = filtered.map(l => ({
-      ...l,
-      distance: distance(w.lat, w.lng, l.lat, l.lng)
-    }));
-  }
-
-  filtered = sortData(filtered, useDistance);
-
-  renderTable(filtered);
-}
-
-/* =========================
-   COMMENTS
-========================= */
-function getComments(id) {
-  return comments.filter(c => c.location_id === id);
-}
-
-function promptUserDropdown() {
-  return new Promise(resolve => {
-    const overlay = document.createElement("div");
-    overlay.style = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;";
-
-    const box = document.createElement("div");
-    box.style = "background:white;padding:20px;border-radius:8px;";
-
-    const select = document.createElement("select");
-    select.innerHTML =
-      `<option value="">User wählen</option>` +
-      users.map(u => `<option value="${u.id}">${u.name}</option>`).join("");
-
-    const btn = document.createElement("button");
-    btn.textContent = "OK";
-
-    btn.onclick = () => {
-      document.body.removeChild(overlay);
-      resolve(select.value);
-    };
-
-    box.append(select, btn);
-    overlay.appendChild(box);
-    document.body.appendChild(overlay);
-  });
-}
-
-async function submitComment(locationId) {
-  const input = document.getElementById(`input_${locationId}`);
-  const text = input.value.trim();
-  if (!text) return;
-
-  const userId = await promptUserDropdown();
-  const user = users.find(u => u.id === userId);
-  if (!user) return;
-
-  const newComment = {
-    location_id: locationId,
-    name: user.name,
-    comment: text
-  };
-
-  comments.push(newComment);
-  renderTable(locations);
-
-  await client.from("location_comments").insert([newComment]);
-
-  input.value = "";
-}
-
-/* =========================
-   TABLE (ORDERED)
-========================= */
-function renderTable(data) {
-  const container = document.getElementById("list");
-
-  if (!data.length) {
-    container.innerHTML = "Keine Daten";
-    return;
-  }
-
-let html = `
-<table>
-  <colgroup>
-    <col style="width: 160px;">  <!-- name -->
-    <col style="width: 120px;">  <!-- ort -->
-    <col style="width: 80px;">   <!-- privat -->
-    <col style="width: 80px;">   <!-- typus -->
-    <col style="width: 140px;">  <!-- stufen -->
-    <col style="width: 140px;">  <!-- speziell -->
-    <col style="width: 120px;">  <!-- sonderschueler -->
-    <col style="width: 120px;">  <!-- therapien -->
-    <col style="width: 120px;">   <!-- heim -->
-    <col style="width: 80px;">  <!-- distance -->
-    <col style="width: 320px;">  <!-- comments -->
-  </colgroup>
-  <tr>
-`;
-
-  columnOrder.forEach(col => {
-    if (col === "comments") {
-      html += "<th>Kommentare</th>";
-    } else {
-      html += `<th>${columnLabels[col] || col}</th>`;
-    }
-  });
-
-  html += "</tr>";
-
-  data.forEach(row => {
-    html += "<tr>";
-
-    columnOrder.forEach(col => {
-
-      if (col === "comments") {
-        const list = getComments(row.id);
-
-html += `<td>
-  ${list.map(c => `<div class="comment-box"><b>${c.name}</b>: ${c.comment}</div>`).join("")}
-
-  <textarea id="input_${row.id}" placeholder="Kommentar..." style="width:100%; min-height:80px;"></textarea>
-
-  <button onclick="submitComment('${row.id}')">Senden</button>
-        </td>`;
-
-      } else if (col === "distance") {
-        const val = row.distance;
-        html += `<td>${val ? val.toFixed(2) : "-"}</td>`;
-
-      } else {
-        const val = row[col];
-        html += `<td>${val ?? "-"}</td>`;
-      }
-    });
-
-    html += "</tr>";
-  });
-
-  html += "</table>";
-  container.innerHTML = html;
-}
-
-load();
-</script>
-
-<div id="impressum">
-  <div class="impressum-inner">
-    <h3>Impressum</h3>
-
-    <p><strong>Betreiber:</strong> Natalie Hofmann, SPD Dübendorf</p>
-    <p><strong>E-Mail:</strong> natalie.hofmann@spd-duebendorf.ch</p>
-
-    <p class="impressum-note">
-      Diese Webseite dient zur Übersicht und Filterung von Schulstandorten im Kanton Zürich.
-    </p>
-  </div>
-</div>
-
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8" /&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">body {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #000000</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #e5e7eb;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* HERO */</p>
+<p class="p1">.hero-header {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>max-width: 1200px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 24px auto 18px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 28px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>text-align: center;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: linear-gradient(135deg, #fff3de, #243a4f);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 18px;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>box-shadow: 0 20px 50px rgba(0,0,0,0.35);</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>overflow: hidden;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.hero-header h1 {</p>
+<p class="p1"><span class="Apple-converted-space"> </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>z-index: 1; /* vor dem Overlay */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #FFFFFF;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>letter-spacing: -0.02em;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.hero-header::before {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>content: "";</p>
+<p class="p1"><span class="Apple-converted-space">  </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>top: -60%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>left: -40%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>width: 200%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>height: 200%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: radial-gradient(circle, rgba(59,130,246,0.12));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>transform: rotate(25deg);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>z-index: 0; /* hinter den Text */</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">/* TOP CONTROLS */</p>
+<p class="p1">#topControls {</p>
+<p class="p1">max-width: 380px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 0 auto 18px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 14px;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #dbd1bf;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>backdrop-filter: blur(10px);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#topControls select {</p>
+<p class="p1">background: #0000000</p>
+<p class="p1">}</p>
+<p class="p1">#topControls button {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>width: 380px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #243a4f;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 16px 0;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#topControls button {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>width: 380px;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* FILTER CARD */</p>
+<p class="p1">#filters {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>max-width: 380px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 0 auto 18px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 14px;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #dbd1bf;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>backdrop-filter: blur(10px);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* SELECT */</p>
+<p class="p1">select {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin-bottom: 10px;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 10px 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 10px;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>border: 1px solid rgba(255,255,255,0.10);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #000000</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #111111;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>transition: all 0.15s ease;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">select:focus {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-color: #3b82f6;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>box-shadow: 0 0 0 3px rgba(59,130,246,0.2);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* BUTTON */</p>
+<p class="p1">button {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 10px 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 10px;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>border: 1px solid rgba(255,255,255,0.10);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #243a4f;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #e5e7eb;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>transition: all 0.15s ease;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">button:hover {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: rgba(59,130,246,0.15);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-color: rgba(59,130,246,0.4);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.reset-btn {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin-top: 10px; <span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #243a4f;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* TABLE WRAPPER */</p>
+<p class="p1">#list {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>overflow-x: auto;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* TABLE */</p>
+<p class="p1">table {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>min-width: 1200px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-collapse: separate;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-spacing: 0;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space"> </span>background: #243a4f;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border: 1px solid rgba(255,255,255,0.06);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>backdrop-filter: blur(10px);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>border: 1px solid rgba(255,255,255,0.06);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* HEADER */</p>
+<p class="p1">th {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: rgba(255,255,255,0.04);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #FFFFFF;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>text-align: left;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-bottom: 1px solid rgba(255,255,255,0.06);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ROWS */</p>
+<p class="p1">td {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 10px 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-bottom: 1px solid rgba(255,255,255,0.05);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>vertical-align: top;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #111111;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #e8e6e6;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">tr:nth-child(even) td {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #d9d7d4;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">td:last-child {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding-right: 40px;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">tr:hover td {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #c0cad1;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* COMMENTS */</p>
+<p class="p1">.comment-box {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #000000</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border: 1px solid rgba(255,255,255,0.08);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 6px 8px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin-bottom: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin-right: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 12px;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* TEXTAREA */</p>
+<p class="p1">textarea {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>max-width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 10px;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>border: 1px solid rgba(255,255,255,0.10);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #000000</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #e5e7eb;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">textarea:focus {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-color: #3b82f6;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>box-shadow: 0 0 0 3px rgba(59,130,246,0.2);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* IMPRESSUM */</p>
+<p class="p1">#impressum {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin-top: 40px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 30px 16px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-top: 1px solid rgba(255,255,255,0.06);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: rgba(255,255,255,0.02);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>text-align: center;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.impressum-inner {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>max-width: 700px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 0 auto;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #111111;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.impressum-inner h3 {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin-bottom: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #111111;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.impressum-note {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin-top: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #111111;</p>
+<p class="p1">}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="hero-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;h1&gt;Verzeichnis sämtlicher Sonder- und Privatschulen im Kanton Zürich&lt;/h1&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="topControls"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;select id="wohnortSelect"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;option value=""&gt;Wohnort wählen&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/select&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="applyFilter()"&gt;Sortieren nach Distanz&lt;/button&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="filters"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;select id="privatFilter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value=""&gt;Privatschule (alle)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Ja"&gt;Ja&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Nein"&gt;Nein&lt;/option&gt;</p>
+<p class="p1">&lt;/select&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;select id="typusFilter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value=""&gt;Typus (alle)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="A"&gt;A&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="B"&gt;B&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="C"&gt;C&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Privat"&gt;Privat&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Timeout"&gt;Timeout&lt;/option&gt;</p>
+<p class="p1">&lt;/select&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;select id="stufenFilter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value=""&gt;Stufen (alle)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Kindergarten"&gt;Kindergarten&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Unterstufe"&gt;Unterstufe&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Mittelstufe"&gt;Mittelstufe&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Sekundarstufe"&gt;Sekundarstufe&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="15plus"&gt;15plus&lt;/option&gt;</p>
+<p class="p1">&lt;/select&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;select id="spezialFilter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value=""&gt;Spezialgebiet (alle)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="ASS"&gt;ASS&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Blindheit"&gt;Blindheit&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Hochbegabung"&gt;Hochbegabung&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Hörbeeinträchtigung"&gt;Hörbeeinträchtigung&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Sprache"&gt;Sprache&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Taubblindheit"&gt;Taubblindheit&lt;/option&gt;</p>
+<p class="p1">&lt;/select&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;select id="sonderFilter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value=""&gt;Erfahrung Sonderschulung (alle)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Ja"&gt;Ja&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Nein"&gt;Nein&lt;/option&gt;</p>
+<p class="p1">&lt;/select&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;select id="therapienFilter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value=""&gt;Ausgebildete Fachkräfte (alle)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Ja"&gt;Ja&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="Nein"&gt;Nein&lt;/option&gt;</p>
+<p class="p1">&lt;/select&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;select id="heimFilter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value=""&gt;Heimangebot (alle)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="JA_A"&gt;Ja (Jungs)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="JA_B"&gt;Ja (Mädchen)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;option value="NEIN"&gt;Nein&lt;/option&gt;</p>
+<p class="p1">&lt;/select&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;button class="reset-btn" onclick="resetFilters()"&gt;Alle Filter zurücksetzen&lt;/button&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="list"&gt;Lade Daten...&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script src="https://unpkg.com/@supabase/supabase-js"&gt;&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 🔑 Supabase</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const supabaseUrl = "https://aqffuybpynssrizdafxx.supabase.co";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFxZmZ1eWJweW5zc3JpemRhZnh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNDUwMzAsImV4cCI6MjA5NjkyMTAzMH0.Flf3jClPFn4eBqQzz0Cu4qucbw7krJB8-mFm5lhTK-Y";</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const client = supabase.createClient(supabaseUrl, supabaseKey);</p>
+<p class="p2"><br></p>
+<p class="p1">/* =========================</p>
+<p class="p1"><span class="Apple-converted-space">   </span>STATE</p>
+<p class="p1">========================= */</p>
+<p class="p1">let locations = [];</p>
+<p class="p1">let wohnorte = [];</p>
+<p class="p1">let users = [];</p>
+<p class="p1">let comments = [];</p>
+<p class="p2"><br></p>
+<p class="p1">/* =========================</p>
+<p class="p1"><span class="Apple-converted-space">   </span>MAPPING</p>
+<p class="p1">========================= */</p>
+<p class="p1">const heimMap = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>JA_A: ["Ja", "Ja, aber nur für Jungs"],</p>
+<p class="p1"><span class="Apple-converted-space">  </span>JA_B: ["Ja"],</p>
+<p class="p1"><span class="Apple-converted-space">  </span>NEIN: ["Nein"]</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">const columnLabels = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>name: "Name",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ort: "Ort",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>privat: "Privat",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>typus: "Typus",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>stufen: "Stufen",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>speziell: "Spezialgebiet",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>sonderschueler: "Sonderschulung",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>therapien_vor_ort: "Therapien",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>heimangebot: "Heimangebot",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>distance: "Distanz (km)"</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">/* =========================</p>
+<p class="p1"><span class="Apple-converted-space">   </span>FIXE SPALTENREIHENFOLGE</p>
+<p class="p1">========================= */</p>
+<p class="p1">const columnOrder = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"name",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"ort",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"privat",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"typus",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"stufen",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"speziell",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"sonderschueler",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"therapien_vor_ort",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"heimangebot",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"distance",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"comments"</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">/* =========================</p>
+<p class="p1"><span class="Apple-converted-space">   </span>SORT</p>
+<p class="p1">========================= */</p>
+<p class="p1">function sortData(data, useDistance = false) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return data.sort((a, b) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const aPriv = a.privat === "Nein" ? 0 : 1;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const bPriv = b.privat === "Nein" ? 0 : 1;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (aPriv !== bPriv) return aPriv - bPriv;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (useDistance) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return (a.distance ?? 999999) - (b.distance ?? 999999);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>return (a.name || "").localeCompare(b.name || "", "de");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* =========================</p>
+<p class="p1"><span class="Apple-converted-space">   </span>Reset Filters</p>
+<p class="p1">========================= */</p>
+<p class="p2"><br></p>
+<p class="p1">function resetFilters() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// alle Filter-Selects zurücksetzen</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll("#filters select").forEach(el =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>el.value = "";</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Wohnort auch explizit resetten</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const wohnortSelect = document.getElementById("wohnortSelect");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (wohnortSelect) wohnortSelect.value = "";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Originaldaten neu anzeigen</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderTable(sortData([...locations], false));</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* =========================</p>
+<p class="p1"><span class="Apple-converted-space">   </span>LOAD</p>
+<p class="p1">========================= */</p>
+<p class="p1">async function load() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>locations = (await client.from('locations').select('*')).data || [];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>wohnorte = (await client.from('wohnorte').select('*')).data || [];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>users = (await client.from('users').select('*')).data || [];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>comments = (await client.from('location_comments').select('*')).data || [];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderDropdown();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll("#filters select")</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.forEach(el =&gt; el.addEventListener("change", applyFilter));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderTable(sortData([...locations], false));</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* =========================</p>
+<p class="p1"><span class="Apple-converted-space">   </span>DROPDOWN</p>
+<p class="p1">========================= */</p>
+<p class="p1">function renderDropdown() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const select = document.getElementById("wohnortSelect");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>wohnorte</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.sort((a,b) =&gt; (a.name||"").localeCompare(b.name||"","de"))</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.forEach(w =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const opt = document.createElement("option");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>opt.value = w.id;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>opt.textContent = w.name;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>select.appendChild(opt);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* =========================</p>
+<p class="p1"><span class="Apple-converted-space">   </span>DISTANCE</p>
+<p class="p1">========================= */</p>
+<p class="p1">function distance(lat1, lon1, lat2, lon2) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const R = 6371;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const dLat = (lat2 - lat1) * Math.PI / 180;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const dLon = (lon2 - lon1) * Math.PI / 180;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const a =</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Math.sin(dLat/2)**2 +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Math.cos(lat1*Math.PI/180) *</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Math.cos(lat2*Math.PI/180) *</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Math.sin(dLon/2)**2;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* =========================</p>
+<p class="p1"><span class="Apple-converted-space">   </span>FILTER</p>
+<p class="p1">========================= */</p>
+<p class="p1">function getFilteredData(baseData) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const typus = document.getElementById("typusFilter").value;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const sonder = document.getElementById("sonderFilter").value;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const spezial = document.getElementById("spezialFilter").value;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const stufen = document.getElementById("stufenFilter").value;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const privat = document.getElementById("privatFilter").value;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const therapien = document.getElementById("therapienFilter").value;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const heim = document.getElementById("heimFilter").value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>return baseData.filter(row =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">      </span>(!typus || row.typus == typus) &amp;&amp;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>(!sonder || row.sonderschueler == sonder) &amp;&amp;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>(!spezial || row.speziell?.split(";").map(x =&gt; x.trim()).includes(spezial)) &amp;&amp;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>(!stufen || row.stufen?.split(";").map(x =&gt; x.trim()).includes(stufen)) &amp;&amp;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>(!privat || row.privat == privat) &amp;&amp;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>(!therapien || row.therapien_vor_ort == therapien) &amp;&amp;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>(!heim || heim === "ALL" || heimMap[heim]?.includes(row.heimangebot))</p>
+<p class="p1"><span class="Apple-converted-space">    </span>);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* =========================</p>
+<p class="p1"><span class="Apple-converted-space">   </span>APPLY FILTER</p>
+<p class="p1">========================= */</p>
+<p class="p1">function applyFilter() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const id = wohnortSelect.value;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const w = wohnorte.find(x =&gt; String(x.id) === String(id));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>let filtered = getFilteredData(locations);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const useDistance = !!w;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (w) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>filtered = filtered.map(l =&gt; ({</p>
+<p class="p1"><span class="Apple-converted-space">      </span>...l,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>distance: distance(w.lat, w.lng, l.lat, l.lng)</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>filtered = sortData(filtered, useDistance);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderTable(filtered);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* =========================</p>
+<p class="p1"><span class="Apple-converted-space">   </span>COMMENTS</p>
+<p class="p1">========================= */</p>
+<p class="p1">function getComments(id) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return comments.filter(c =&gt; c.location_id === id);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function promptUserDropdown() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return new Promise(resolve =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const overlay = document.createElement("div");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overlay.style = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const box = document.createElement("div");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box.style = "background:white;padding:20px;border-radius:8px;";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const select = document.createElement("select");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>select.innerHTML =</p>
+<p class="p1"><span class="Apple-converted-space">      </span>`&lt;option value=""&gt;User wählen&lt;/option&gt;` +</p>
+<p class="p1"><span class="Apple-converted-space">      </span>users.map(u =&gt; `&lt;option value="${u.id}"&gt;${u.name}&lt;/option&gt;`).join("");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const btn = document.createElement("button");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>btn.textContent = "OK";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>btn.onclick = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.body.removeChild(overlay);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>resolve(select.value);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>box.append(select, btn);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overlay.appendChild(box);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.body.appendChild(overlay);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">async function submitComment(locationId) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const input = document.getElementById(`input_${locationId}`);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const text = input.value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!text) return;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const userId = await promptUserDropdown();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const user = users.find(u =&gt; u.id === userId);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!user) return;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const newComment = {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>location_id: locationId,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>name: user.name,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>comment: text</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>comments.push(newComment);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderTable(locations);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>await client.from("location_comments").insert([newComment]);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>input.value = "";</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* =========================</p>
+<p class="p1"><span class="Apple-converted-space">   </span>TABLE (ORDERED)</p>
+<p class="p1">========================= */</p>
+<p class="p1">function renderTable(data) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const container = document.getElementById("list");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!data.length) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>container.innerHTML = "Keine Daten";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1">let html = `</p>
+<p class="p1">&lt;table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;colgroup&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;col style="width: 160px;"&gt;<span class="Apple-converted-space">  </span>&lt;!-- name --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;col style="width: 120px;"&gt;<span class="Apple-converted-space">  </span>&lt;!-- ort --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;col style="width: 80px;"&gt; <span class="Apple-converted-space">  </span>&lt;!-- privat --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;col style="width: 80px;"&gt; <span class="Apple-converted-space">  </span>&lt;!-- typus --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;col style="width: 140px;"&gt;<span class="Apple-converted-space">  </span>&lt;!-- stufen --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;col style="width: 140px;"&gt;<span class="Apple-converted-space">  </span>&lt;!-- speziell --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;col style="width: 120px;"&gt;<span class="Apple-converted-space">  </span>&lt;!-- sonderschueler --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;col style="width: 120px;"&gt;<span class="Apple-converted-space">  </span>&lt;!-- therapien --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;col style="width: 120px;"&gt; <span class="Apple-converted-space">  </span>&lt;!-- heim --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;col style="width: 80px;"&gt;<span class="Apple-converted-space">  </span>&lt;!-- distance --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;col style="width: 320px;"&gt;<span class="Apple-converted-space">  </span>&lt;!-- comments --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/colgroup&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;tr&gt;</p>
+<p class="p1">`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>columnOrder.forEach(col =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (col === "comments") {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>html += "&lt;th&gt;Kommentare&lt;/th&gt;";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>html += `&lt;th&gt;${columnLabels[col] || col}&lt;/th&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += "&lt;/tr&gt;";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>data.forEach(row =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += "&lt;tr&gt;";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>columnOrder.forEach(col =&gt; {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (col === "comments") {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const list = getComments(row.id);</p>
+<p class="p2"><br></p>
+<p class="p1">html += `&lt;td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>${list.map(c =&gt; `&lt;div class="comment-box"&gt;&lt;b&gt;${c.name}&lt;/b&gt;: ${c.comment}&lt;/div&gt;`).join("")}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;textarea id="input_${row.id}" placeholder="Kommentar..." style="width:100%; min-height:80px;"&gt;&lt;/textarea&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="submitComment('${row.id}')"&gt;Senden&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/td&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else if (col === "distance") {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const val = row.distance;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>html += `&lt;td&gt;${val ? val.toFixed(2) : "-"}&lt;/td&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const val = row[col];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>html += `&lt;td&gt;${val ?? "-"}&lt;/td&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += "&lt;/tr&gt;";</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += "&lt;/table&gt;";</p>
+<p class="p1"><span class="Apple-converted-space">  </span>container.innerHTML = html;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">load();</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="impressum"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="impressum-inner"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h3&gt;Impressum&lt;/h3&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;&lt;strong&gt;Betreiber:&lt;/strong&gt; Natalie Hofmann, SPD Dübendorf&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;&lt;strong&gt;E-Mail:&lt;/strong&gt; natalie.hofmann@spd-duebendorf.ch&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="impressum-note"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>Diese Webseite dient zur Übersicht und Filterung von Schulstandorten im Kanton Zürich.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
 </body>
 </html>
