@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+
+<style>
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  margin: 0;
+  background: #000000
+  color: #e5e7eb;
+}
+
+
+
+/* HERO */
+.hero-header {
+  max-width: 1200px;
+  margin: 24px auto 18px;
+  padding: 28px 20px;
+  text-align: center;
+
+  background: linear-gradient(135deg, #fff3de, #243a4f);
+  border-radius: 18px;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+
+
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-header h1 {
+ position: relative;
+  z-index: 1; /* vor dem Overlay */
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+}
+
+.hero-header::before {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -40%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(59,130,246,0.12));
+  transform: rotate(25deg);
+  z-index: 0; /* hinter den Text */
+}
+
+/* SEARCH CONTROLS */
+#searchBox  {
+max-width: 380px;
+  margin: 0 auto 18px;
+  padding: 14px;
+
+  background: #dbd1bf;
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+}
+
+
+#searchBox input {
+  width: 100%;
+  box-sizing: border-box;
+
+  margin-bottom: 10px;
+  padding: 10px 12px;
+
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.10);
+
+  background: #ffffff;
+  color: #111111;
+
+  font-size: 14px;
+}
+
+#searchBox input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+}
+
+#searchBox button {
+  width: 100%;
+  background: #243a4f;
+}
+
+
+/* TOP Bezirk */
+#topBezirk {
+max-width: 380px;
+  margin: 0 auto 18px;
+  padding: 14px;
+
+  background: #dbd1bf;
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+}
+
+#topBezirk select {
+background: #0000000
+}
+#topBezirk button {
+  width: 380px;
+  background: #243a4f;
+}
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+#topBezirk button {
+  width: 380px;
+}
+
+
+
+
+
+
+/* TOP CONTROLS */
+#topControls {
+max-width: 380px;
+  margin: 0 auto 18px;
+  padding: 14px;
+
+  background: #dbd1bf;
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+}
+
+#topControls select {
+background: #0000000
+}
+#topControls button {
+  width: 380px;
+  background: #243a4f;
+}
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+#topControls button {
+  width: 380px;
+}
+
+/* FILTER CARD */
+#filters {
+  max-width: 380px;
+  margin: 0 auto 18px;
+  padding: 14px;
+
+  background: #dbd1bf;
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+}
+
+/* SELECT */
+select {
+  width: 100%;
+  margin-bottom: 10px;
+
+  padding: 10px 12px;
+  border-radius: 10px;
+
+  border: 1px solid rgba(255,255,255,0.10);
+  background: #000000
+  color: #111111;
+
+  font-size: 14px;
+  transition: all 0.15s ease;
+}
+
+select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+}
+
+/* BUTTON */
+button {
+  padding: 10px 12px;
+  border-radius: 10px;
+
+  border: 1px solid rgba(255,255,255,0.10);
+  background: #243a4f;
+  color: #e5e7eb;
+
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+button:hover {
+  background: rgba(59,130,246,0.15);
+  border-color: rgba(59,130,246,0.4);
+}
+
+.apply-btn {
+  width: 100%;
+  margin-top: 10px;
+  background: #243a4f;
+}
+
+.reset-btn {
+  width: 100%;
+  margin-top: 10px;  
+  background: #243a4f;
+}
+
+/* TABLE WRAPPER */
+#list {
+  padding: 16px;
+  overflow-x: auto;
+}
+
+/* TABLE */
+table {
+
+  width: 100%;
+  min-width: 1200px;
+  border-collapse: separate;
+  border-spacing: 0;
+
+
+ background: #243a4f;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+
+tr:last-child td:first-child {
+  border-bottom-left-radius: 14px;
+}
+
+tr:last-child td:last-child {
+  border-bottom-right-radius: 14px;
+}
+
+/* HEADER */
+th {
+  background: rgba(255,255,255,0.04);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ROWS */
+td {
+  padding: 10px 12px;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  vertical-align: top;
+  color: #111111;
+  background: #e8e6e6;
+}
+
+tr:nth-child(even) td {
+  background: #d9d7d4;
+}
+
+td:last-child {
+  padding-right: 40px;
+}
+
+tr:hover td {
+  background: #c0cad1;
+}
+
+/* COMMENTS */
+.comment-box {
+  background: #000000
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 6px 8px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  font-size: 12px;
+}
+
+/* TEXTAREA */
+textarea {
+  max-width: 100%;
+  border-radius: 10px;
+
+  border: 1px solid rgba(255,255,255,0.10);
+  background: #000000
+
+  padding: 8px;
+  font-size: 13px;
+  color: #111111;
+}
+
+textarea:focus {
+  outline: #111111;
+  border-color: #111111;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+}
+
+/* IMPRESSUM */
+#impressum {
+  margin-top: 40px;
+  padding: 30px 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+  text-align: center;
+}
+
+.impressum-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 13px;
+  color: #111111;
+}
+
+.impressum-inner h3 {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #111111;
+}
+
+.impressum-note {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #111111;
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero-header">
+  <h1>Verzeichnis sämtlicher Sonder- und Privatschulen im Kanton Zürich</h1>
+</div>
+
+<div id="searchBox">
+  <input id="searchInput" type="text" placeholder="Suche..." />
+  <button onclick="applyFilter()">Suchen</button>
+</div>
+
+<div id="topBezirk">
+  <select id="bezirkSelect">
+    <option value="">Bezirk wählen</option>
+    <option value="Affoltern">Affoltern</option>
+    <option value="Andelfingen">Andelfingen</option>
+    <option value="Bülach">Bülach</option>
+    <option value="Dielsdorf">Dielsdorf</option>
+    <option value="Dietikon">Dietikon</option>
+    <option value="Hinwil">Hinwil</option>
+    <option value="Horgen">Horgen</option>
+    <option value="Meilen">Meilen</option>
+    <option value="Pfäffikon">Pfäffikon</option>
+    <option value="Uster">Uster</option>
+    <option value="Winterthur">Winterthur</option>
+    <option value="Zürich">Zürich</option>
+</select>
+
+  <button onclick="applyFilter()">Bezirk suchen</button>
+</div>
+
+<div id="topControls">
+  <select id="wohnortSelect">
+    <option value="">Wohnort wählen</option>
+  </select>
+
+  <button onclick="applyFilter()">Sortieren nach Distanz</button>
+</div>
+
+<div id="filters">
+
+<select id="privatFilter">
+  <option value="">Privatschule (alle)</option>
+  <option value="Ja">Ja</option>
+  <option value="Nein">Nein</option>
+</select>
+
+<select id="typusFilter">
+  <option value="">Typus (alle)</option>
+  <option value="A">A</option>
+  <option value="B">B</option>
+  <option value="C">C</option>
+  <option value="Privat">Privat</option>
+  <option value="Timeout">Timeout</option>
+</select>
+
+<select id="stufenFilter">
+  <option value="">Stufen (alle)</option>
+  <option value="Kindergarten">Kindergarten</option>
+  <option value="Unterstufe">Unterstufe</option>
+  <option value="Mittelstufe">Mittelstufe</option>
+  <option value="Sekundarstufe">Sekundarstufe</option>
+  <option value="15plus">15plus</option>
+</select>
+
+<select id="spezialFilter">
+  <option value="">Spezialgebiet (alle)</option>
+  <option value="ASS">ASS</option>
+  <option value="Blindheit">Blindheit</option>
+  <option value="Hochbegabung">Hochbegabung</option>
+  <option value="Hörbeeinträchtigung">Hörbeeinträchtigung</option>
+  <option value="Sprache">Sprache</option>
+  <option value="Taubblindheit">Taubblindheit</option>
+</select>
+
+<select id="sonderFilter">
+  <option value="">Erfahrung Sonderschulung (alle)</option>
+  <option value="Ja">Ja</option>
+</select>
+
+<select id="therapienFilter">
+  <option value="">Ausgebildete Fachkräfte (alle)</option>
+  <option value="Ja">Ja</option>
+</select>
+
+<select id="heimFilter">
+  <option value="">Heimangebot (alle)</option>
+  <option value="JA_A">Ja (Jungs)</option>
+  <option value="JA_B">Ja (Mädchen)</option>
+  <option value="NEIN">Nein</option>
+</select>
+
+<button class="apply-btn" onclick="applyFilter()">Filter anwenden</button>
+
+<button class="reset-btn" onclick="resetFilters()">Alle Filter zurücksetzen</button>
+
+</div>
+
+<div id="list">Lade Daten...</div>
+
+<script src="https://unpkg.com/@supabase/supabase-js"></script>
+
+<script>
+    // 🔑 Supabase
+    const supabaseUrl = "https://aqffuybpynssrizdafxx.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFxZmZ1eWJweW5zc3JpemRhZnh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNDUwMzAsImV4cCI6MjA5NjkyMTAzMH0.Flf3jClPFn4eBqQzz0Cu4qucbw7krJB8-mFm5lhTK-Y";
+  const client = supabase.createClient(supabaseUrl, supabaseKey);
+
+/* =========================
+   STATE
+========================= */
+let locations = [];
+let wohnorte = [];
+let users = [];
+let comments = [];
+
+/* =========================
+   MAPPING
+========================= */
+const heimMap = {
+  JA_A: ["Ja", "Ja, aber nur für Jungs"],
+  JA_B: ["Ja"],
+  NEIN: ["Nein"]
+};
+
+
+
+
+const columnLabels = {
+  name: "Name",
+  ort: "Ort",
+  bezirk: "Bezirk",
+  privat: "Privat",
+  typus: "Typus",
+  stufen: "Stufen",
+  speziell: "Spezialgebiet",
+  sonderschueler: "Sonderschulung",
+  therapien_vor_ort: "Therapien",
+  heimangebot: "Heimangebot",
+  distance: "Distanz (km)"
+};
+
+/* =========================
+   FIXE SPALTENREIHENFOLGE
+========================= */
+const columnOrder = [
+  "name",
+  "ort",
+  "bezirk",
+  "privat",
+  "typus",
+  "stufen",
+  "speziell",
+  "sonderschueler",
+  "therapien_vor_ort",
+  "heimangebot",
+  "distance",
+  "comments"
+];
+
+/* =========================
+   SORT
+========================= */
+function sortData(data, useDistance = false) {
+  return data.sort((a, b) => {
+    // 1. PRIVAT (immer höchste Priorität)
+    const aPriv = a.privat === "Nein" ? 0 : 1;
+    const bPriv = b.privat === "Nein" ? 0 : 1;
+
+    if (aPriv !== bPriv) return aPriv - bPriv;
+
+    // 2. DISTANZ (optional)
+    if (useDistance) {
+      const distanceDiff =
+        (a.distance ?? 999999) - (b.distance ?? 999999);
+
+      if (distanceDiff !== 0) return distanceDiff;
+    }
+
+    // 3. SONDERSCHÜLER
+    const sonderOrder = {
+      "Ja": 0,
+      "Ausnahmefälle": 1,
+      "Nein": 2
+    };
+
+    const aSonder = sonderOrder[a.sonderschueler] ?? 99;
+    const bSonder = sonderOrder[b.sonderschueler] ?? 99;
+
+    if (aSonder !== bSonder) return aSonder - bSonder;
+
+    // 4. NAME
+    return (a.name || "").localeCompare(b.name || "", "de");
+  });
+}
+/* =========================
+   Reset Filters
+========================= */
+
+function resetFilters() {
+
+  document.querySelectorAll("#filters select").forEach(el => {
+    el.value = "";
+  });
+
+  document.getElementById("searchInput").value = "";
+
+  const wohnortSelect = document.getElementById("wohnortSelect");
+  if (wohnortSelect) wohnortSelect.value = "";
+
+const bezirkSelect = document.getElementById("bezirkSelect");
+  if (bezirkSelect) bezirkSelect.value = "";
+
+
+  renderTable(sortData([...locations], false));
+}
+
+/* =========================
+   LOAD
+========================= */
+async function load() {
+  locations = (await client.from('locations').select('*')).data || [];
+  wohnorte = (await client.from('wohnorte').select('*')).data || [];
+  users = (await client.from('users').select('*')).data || [];
+  comments = (await client.from('location_comments').select('*')).data || [];
+
+  renderDropdown();
+
+
+  renderTable(sortData([...locations], false));
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+function renderDropdown() {
+  const select = document.getElementById("wohnortSelect");
+
+  wohnorte
+    .sort((a,b) => (a.name||"").localeCompare(b.name||"","de"))
+    .forEach(w => {
+      const opt = document.createElement("option");
+      opt.value = w.id;
+      opt.textContent = w.name;
+      select.appendChild(opt);
+    });
+}
+
+/* =========================
+   DISTANCE
+========================= */
+function distance(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+
+  const a =
+    Math.sin(dLat/2)**2 +
+    Math.cos(lat1*Math.PI/180) *
+    Math.cos(lat2*Math.PI/180) *
+    Math.sin(dLon/2)**2;
+
+  return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+/* =========================
+   FILTER
+========================= */
+function getFilteredData(baseData) {
+  const bezirk = document.getElementById("bezirkSelect")?.value;
+  const typus = document.getElementById("typusFilter").value;
+  const sonder = document.getElementById("sonderFilter").value;
+  const spezial = document.getElementById("spezialFilter").value;
+  const stufen = document.getElementById("stufenFilter").value;
+  const privat = document.getElementById("privatFilter").value;
+  const therapien = document.getElementById("therapienFilter").value;
+  const heim = document.getElementById("heimFilter").value;
+const search = document.getElementById("searchInput").value.trim().toLowerCase();
+
+  return baseData.filter(row => {
+
+  // bestehende Filter
+  const matchesFilters =
+    (!bezirk || row.bezirk == bezirk) &&
+    (!typus || row.typus?.split(";").map(x => x.trim()).includes(typus)) &&
+    (!sonder || row.sonderschueler == sonder) &&
+    (!spezial || row.speziell?.split(";").map(x => x.trim()).includes(spezial)) &&
+    (!stufen || row.stufen?.split(";").map(x => x.trim()).includes(stufen)) &&
+    (!privat || row.privat == privat) &&
+    (!therapien || row.therapien_vor_ort == therapien) &&
+    (!heim || heim === "ALL" || heimMap[heim]?.includes(row.heimangebot));
+
+  const matchesSearch = !search || Object.values(row)
+    .join(" ")
+    .toLowerCase()
+    .includes(search);
+
+  return matchesFilters && matchesSearch;
+});
+}
+
+/* =========================
+   APPLY FILTER
+========================= */
+function applyFilter() {
+  const id = wohnortSelect.value;
+  const w = wohnorte.find(x => String(x.id) === String(id));
+
+  let filtered = getFilteredData(locations);
+
+  const useDistance = !!w;
+
+  if (w) {
+    filtered = filtered.map(l => ({
+      ...l,
+      distance: distance(w.lat, w.lng, l.lat, l.lng)
+    }));
+  }
+
+  filtered = sortData(filtered, useDistance);
+
+  renderTable(filtered);
+}
+
+/* =========================
+   COMMENTS
+========================= */
+function getComments(id) {
+  return comments.filter(c => c.location_id === id);
+}
+
+function promptUserDropdown() {
+  return new Promise(resolve => {
+    const overlay = document.createElement("div");
+    overlay.style = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;";
+
+    const box = document.createElement("div");
+    box.style = `
+  background: #dbd1bf;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #3b82f6;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+
+    const select = document.createElement("select");
+    select.innerHTML =
+      `<option value="">User wählen</option>` +
+      users.map(u => `<option value="${u.id}">${u.name}</option>`).join("");
+
+    const btn = document.createElement("button");
+    btn.textContent = "OK";
+
+    btn.onclick = () => {
+      document.body.removeChild(overlay);
+      resolve(select.value);
+    };
+
+    box.append(select, btn);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+  });
+}
+
+async function submitComment(locationId) {
+  const input = document.getElementById(`input_${locationId}`);
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userId = await promptUserDropdown();
+  const user = users.find(u => u.id === userId);
+  if (!user) return;
+
+  const newComment = {
+    location_id: locationId,
+    name: user.name,
+    comment: text
+  };
+
+  comments.push(newComment);
+applyFilter();
+
+  await client.from("location_comments").insert([newComment]);
+
+  input.value = "";
+}
+
+/* =========================
+   TABLE (ORDERED)
+========================= */
+function renderTable(data) {
+  const container = document.getElementById("list");
+
+  if (!data.length) {
+    container.innerHTML = "Keine Daten";
+    return;
+  }
+
+let html = `
+<table>
+  <colgroup>
+    <col style="width: 160px;">  <!-- name -->
+    <col style="width: 120px;">  <!-- ort -->
+    <col style="width: 120px;">  <!-- bezirk -->
+    <col style="width: 80px;">   <!-- privat -->
+    <col style="width: 80px;">   <!-- typus -->
+    <col style="width: 140px;">  <!-- stufen -->
+    <col style="width: 140px;">  <!-- speziell -->
+    <col style="width: 120px;">  <!-- sonderschueler -->
+    <col style="width: 120px;">  <!-- therapien -->
+    <col style="width: 120px;">   <!-- heim -->
+    <col style="width: 80px;">  <!-- distance -->
+    <col style="width: 320px;">  <!-- comments -->
+  </colgroup>
+  <tr>
+`;
+
+  columnOrder.forEach(col => {
+    if (col === "comments") {
+      html += "<th>Kommentare</th>";
+    } else {
+      html += `<th>${columnLabels[col] || col}</th>`;
+    }
+  });
+
+  html += "</tr>";
+
+  data.forEach(row => {
+    html += "<tr>";
+
+    columnOrder.forEach(col => {
+
+      if (col === "comments") {
+        const list = getComments(row.id);
+
+html += `<td>
+  ${list.map(c => `<div class="comment-box"><b>${c.name}</b>: ${c.comment}</div>`).join("")}
+
+  <textarea id="input_${row.id}" placeholder="Kommentar..." style="width:100%; min-height:80px;"></textarea>
+
+  <button onclick="submitComment('${row.id}')">Senden</button>
+        </td>`;
+
+      } else if (col === "distance") {
+        const val = row.distance;
+        html += `<td>${val ? val.toFixed(2) : "-"}</td>`;
+
+      } else {
+        const val = row[col];
+        html += `<td>${val ?? "-"}</td>`;
+      }
+    });
+
+    html += "</tr>";
+  });
+
+  html += "</table>";
+  container.innerHTML = html;
+}
+
+load();
+</script>
+
+<div id="impressum">
+  <div class="impressum-inner">
+    <h3>Impressum</h3>
+
+    <p><strong>Betreiber:</strong> Natalie Hofmann, SPD Dübendorf</p>
+    <p><strong>E-Mail:</strong> natalie.hofmann[at]spd-duebendorf.ch</p>
+
+    <p class="impressum-note">
+      Diese Webseite dient zur Übersicht und Filterung von Schulstandorten im Kanton Zürich.
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
